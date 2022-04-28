@@ -7,7 +7,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const apiUrl = 'http://localhost:5000/api/editoras';
+const apiUrl = 'https://localhost:44305/api';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,8 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getEditoras (): Observable<Editoras[]> {
-    return this.http.get<Editoras[]>(apiUrl)
+    const url = `${apiUrl}/editora`
+    return this.http.get<Editoras[]>(url)
       .pipe(
         tap(produtos => console.log('leu as editoras')),
         catchError(this.handleError('getEditoras', []))
@@ -26,7 +27,7 @@ export class ApiService {
   }
 
   getEditora(id: number): Observable<Editoras> {
-    const url = `${apiUrl}/${id}`;
+    const url = `${apiUrl}/editora/${id}`;
     return this.http.get<Editoras>(url).pipe(
       tap(_ => console.log(`leu a Editora id=${id}`)),
       catchError(this.handleError<Editoras>(`getEditora id=${id}`))
@@ -34,7 +35,8 @@ export class ApiService {
   }
 
   addEditora (editora: any): Observable<Editoras> {
-    return this.http.post<Editoras>(apiUrl, editora, httpOptions).pipe(
+    const url = `${apiUrl}/editora`
+    return this.http.post<Editoras>(url, editora, httpOptions).pipe(
       // tslint:disable-next-line:no-shadowed-variable
       tap((editora: Editoras) => console.log(`adicionou a editora com w/ id=${editora.idEditora}`)),
       catchError(this.handleError<Editoras>('addEditora'))
@@ -42,7 +44,7 @@ export class ApiService {
   }
 
   updateEditora(id: any, editora: any): Observable<any> {
-    const url = `${apiUrl}/${id}`;
+    const url = `${apiUrl}/editora/${id}`;
     return this.http.put(url, editora, httpOptions).pipe(
       tap(_ => console.log(`atualiza a editora com id=${id}`)),
       catchError(this.handleError<any>('updateEditora'))
@@ -50,7 +52,7 @@ export class ApiService {
   }
 
   deleteEditora (id: any): Observable<Editoras> {
-    const url = `${apiUrl}/delete/${id}`;
+    const url = `${apiUrl}/editora/${id}`;
 
     return this.http.delete<Editoras>(url, httpOptions).pipe(
       tap(_ => console.log(`remove a editora com id=${id}`)),

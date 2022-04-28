@@ -1,8 +1,7 @@
+import { ApiService } from './../../service/api-scans-cqrs.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ApiService } from '../../service/api-scans-cqrs.service';
-
 @Component({
   selector: 'app-editoras-novo',
   templateUrl: './editoras-novo.component.html',
@@ -10,14 +9,16 @@ import { ApiService } from '../../service/api-scans-cqrs.service';
 })
 export class EditorasNovoComponent implements OnInit {
   editoraForm!: FormGroup;
+  nomeEditora: String = '';
+  idEditora!: number;
   isLoadingResults = false;
-
   constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder) { }
 
-  ngOnInit(): {
-    this.editoraForm = this.formBuilder.group({
-      'nome_editora' : [null, Validators.required]
-    });
+  ngOnInit() {
+     this.editoraForm = this.formBuilder.group({
+    'idEditora' : [Validators.required],
+    'nomeEditora' : [null, Validators.required]
+  });
   }
 
   addEditora(form: NgForm) {
@@ -33,4 +34,3 @@ export class EditorasNovoComponent implements OnInit {
         });
   }
 }
-

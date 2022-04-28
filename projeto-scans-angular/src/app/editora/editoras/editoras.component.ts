@@ -12,7 +12,7 @@ import { ApiService } from '../../service/api-scans-cqrs.service';
 export class EditorasComponent implements OnInit {
 
   displayedColumns: string[] = [ 'ID', 'nome'];
-  dataSource: Editoras[] = [];
+  dataSource!: Editoras[];
   isLoadingResults: boolean | undefined;
 
   constructor(private _api: ApiService) { }
